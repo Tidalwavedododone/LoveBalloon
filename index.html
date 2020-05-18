@@ -7,11 +7,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <title>Wish You Were Here</title>
     <link rel="stylesheet" href="./static/style.css">
+    <script>
+    /**微信环境中**/
+        document.addEventListener("WeixinJSBridgeReady", function () {
+            audioAutoPlay('music');
+        }, false);
+    </script>
+
 </head>
 <body>
 
 <img src="static/music.png" style="position: fixed;z-index: 10001;top:10px;right:10px;" onclick="let m = document.querySelector('.song-audio-autoplay'); if (m.paused ) {m.play(); this.className = 'rotateImages'} else {m.pause(); this.className = ''}">
-<audio id="music" class="song-audio-autoplay" controls loop style="display: none;visibility: hidden">
+<audio id="music" class="song-audio-autoplay" autoplay="true" preload="auto" loop="loop" controls loop style="display: none;visibility: hidden">
     <source src="static/sweet.mp3"></source>
     Your browser isn't invited for super fun audio time.
 </audio>
@@ -100,4 +107,16 @@
 <script src="config.js"></script>
 <script src="static/index.js"></script>
 </body>
+<script>
+    function audioAutoPlay(id){
+        var audio = document.getElementById(id);
+        var play = function(){
+            audio.play();
+            audio.pause();
+            document.removeEventListener("touchstart",play, false);
+        };
+        audio.play();
+        document.addEventListener("touchstart",play, false);
+}
+</script>
 </html>
